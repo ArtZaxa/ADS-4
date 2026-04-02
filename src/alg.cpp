@@ -1,13 +1,11 @@
 // Copyright 2021 NNTU-CS
-int countPairs1(int* arr, int len, int value)
-{
+#include "alg.h"
+int countPairs1(int* arr, int len, int value){
     if (arr == 0 || len < 2)
         return 0;
     int count = 0;
-    for (int i = 0; i < len - 1; ++i)
-    {
-        for (int j = i + 1; j < len; ++j)
-        {
+    for (int i = 0; i < len - 1; ++i){
+        for (int j = i + 1; j < len; ++j){
             if (arr[i] + arr[j] == value)
                 ++count;
         }
@@ -15,14 +13,12 @@ int countPairs1(int* arr, int len, int value)
     return count;
 }
 
-int countPairs2(int* arr, int len, int value)
-{
+int countPairs2(int* arr, int len, int value){
     if (arr == 0 || len < 2)
         return 0;
     int count = 0;
 
-    for (int left = 0; left < len - 1; ++left)
-    {
+    for (int left = 0; left < len - 1; ++left){
         if (arr[left]*2 > value) {
             break;
         }
@@ -31,29 +27,26 @@ int countPairs2(int* arr, int len, int value)
         while (right > left && arr[left] + arr[right] > value)
             --right;
 
-        while (right > left && arr[left] + arr[right] == value)
-        {
+        while (right > left && arr[left] + arr[right] == value){
             ++count;
             --right;
         }
     }
     return count;
 }
-int countPairs3(int* arr, int len, int value)
-{
+int countPairs3(int* arr, int len, int value){
     if (arr == 0 || len < 2)
         return 0;
     int count = 0;
     int i = 0;
 
-    while (i < len - 1)
-    {
+    while (i < len - 1){
         int current = arr[i];
         int leftCount = 1;
-        while (i + leftCount < len && arr[i + leftCount] == current) ++leftCount;
+        while (i + leftCount < len && arr[i + leftCount] == current) 
+            ++leftCount;
         int target = value - current;
-        if (target == current)
-        {
+        if (target == current){
             count += leftCount * (leftCount - 1) / 2;
             i += leftCount;
             continue;
@@ -61,42 +54,29 @@ int countPairs3(int* arr, int len, int value)
         int left = i + leftCount;
         int right = len - 1;
         int first = -1;
-        while (left <= right)
-        {
+        while (left <= right){
             int mid = left + (right - left) / 2;
-            if (arr[mid] < target)
-            {
+            if (arr[mid] < target){
                 left = mid + 1;
-            }
-            else if (arr[mid] > target)
-            {
+            }else if (arr[mid] > target){
                 right = mid - 1;
-            }
-            else
-            {
+            }else{
                 first = mid;
                 right = mid - 1;
             }
         }
 
-        if (first != -1)
-        {
+        if (first != -1){
             left = first;
             right = len - 1;
             int last = first;
-            while (left <= right)
-            {
+            while (left <= right){
                 int mid = left + (right - left) / 2;
-                if (arr[mid] < target)
-                {
+                if (arr[mid] < target){
                     left = mid + 1;
-                }
-                else if (arr[mid] > target)
-                {
+                }else if (arr[mid] > target){
                     right = mid - 1;
-                }
-                else
-                {
+                }else{
                     last = mid;
                     left = mid + 1;
                 }
